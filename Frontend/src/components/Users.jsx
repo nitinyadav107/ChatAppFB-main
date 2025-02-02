@@ -3,6 +3,7 @@ import User from './User'
 import GetAllUser from '../context/GetAllUser';
 
 const Users = () => {
+   const loginUser = JSON.parse(localStorage.getItem('ChatApp')).user;
    const [allUsers, setAllUsers] = GetAllUser();
    console.log(allUsers);
    
@@ -11,11 +12,14 @@ const Users = () => {
       <h1 className='px-8 py-3 text-white font-semibold bg-slate-800 rounded-lg'>  Messages</h1>
       <div className='element-class overflow-y-scroll h-[calc(100vh-12rem)] '>
         {
-          // map over users and render user component
-          allUsers.map((user,index) => {
-              return <User key={index} user={user} />
+         
+          allUsers
+            .filter(user => user._id !== loginUser.id)
+            .map((user, index) => (
+              <User key={index} user={user} />
+            ))
              
-          })
+          
 
         }
        

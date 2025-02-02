@@ -27,14 +27,13 @@ export const signup = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-// 导出一个名为login的异步函数
+
 export const login = async (req, res) => {
-  // 从请求体中获取email和password
+ 
   const { email, password } = req.body;
 
   try {
-    // Find user by email and select the password field as well (by default it's not returned)
-    // We need the password to compare it with the one provided in the request
+   
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -54,6 +53,8 @@ export const getUser = async (req, res) => {
  
   try {
     const users = await User.find().select("-password");
+    
+
    
     if (!users) {
       return res.status(200).json({ message: "Users not found" ,success: false});

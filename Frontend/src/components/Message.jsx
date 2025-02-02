@@ -7,30 +7,39 @@ function Message({ message }) {
   console.log("Auth user id"
   , authUser.user.id);
   console.log("Message sender id", message.senderId);
-  const itsMe = message.senderId === authUser.user.id;
+  const itsMe1 = message.senderId === authUser.user.id
+  const itsMe2= message.newMessage? message.newMessage.senderId === authUser.user.id:false;
+  const itsMe=itsMe1 || itsMe2;
   console.log("itsMe", itsMe);
 
   const chatName = itsMe ? " chat-end" : "chat-start";
   const chatColor = itsMe ? "bg-blue-500" : "";
-
-  const createdAt = new Date(message.createdAt);
+  const newTime= message.newMessage? new Date(message.newMessage.createdAt): null;
+  const createdAt =newTime ? newTime : new Date(message.createdAt) 
   const formattedTime = createdAt.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
   return (
     <div>
-      {authUser?(
+      {message.newMessage ? (
         <div className="p-4">
+        <div className={`chat ${chatName}`}>
+          <div className={`chat-bubble text-white ${chatColor}`}>
+            {message.newMessage.message}
+          </div>
+          <div className="chat-footer">{formattedTime}</div>
+        </div>
+      </div>
+
+      ):(<div className="p-4">
         <div className={`chat ${chatName}`}>
           <div className={`chat-bubble text-white ${chatColor}`}>
             {message.message}
           </div>
           <div className="chat-footer">{formattedTime}</div>
         </div>
-      </div>
-
-      ):(<div></div>)}
+      </div>)} 
       
     </div>
   );
