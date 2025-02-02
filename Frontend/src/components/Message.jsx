@@ -1,19 +1,39 @@
-import React from 'react'
+import React from "react";
 
-const Message = () => {
+function Message({ message }) {
+  console.log("Message component", message);
+  const authUser = JSON.parse(localStorage.getItem("ChatApp"));
+  console.log("Auth user", authUser);
+  console.log("Auth user id"
+  , authUser.user.id);
+  console.log("Message sender id", message.senderId);
+  const itsMe = message.senderId === authUser.user.id;
+  console.log("itsMe", itsMe);
+
+  const chatName = itsMe ? " chat-end" : "chat-start";
+  const chatColor = itsMe ? "bg-blue-500" : "";
+
+  const createdAt = new Date(message.createdAt);
+  const formattedTime = createdAt.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <div>
-       <div className="chat chat-start">
-        <div className="chat-bubble chat-bubble-secondary ">
-          Put me on the Council and not make me a Master!??lorem20
+      {authUser?(
+        <div className="p-4">
+        <div className={`chat ${chatName}`}>
+          <div className={`chat-bubble text-white ${chatColor}`}>
+            {message.message}
+          </div>
+          <div className="chat-footer">{formattedTime}</div>
         </div>
       </div>
-      <div className="chat chat-end">
-        <div className="chat-bubble chat-bubble-warning ">To be on the Council at your age.</div>
-      </div>
+
+      ):(<div></div>)}
       
     </div>
-  )
+  );
 }
 
-export default Message
+export default Message;

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthProvider';
 
 const Signup = () => {
     const { authUser, setAuthUser } = useAuth();
-    console.log(authUser);
+    ;
     
    
   const [isSignup, setIsSignup] = React.useState(true);
