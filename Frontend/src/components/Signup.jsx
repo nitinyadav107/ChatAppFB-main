@@ -2,10 +2,12 @@ import axios from 'axios';
 import React from 'react'
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthProvider';
+import { useNavigate } from 'react-router';
 
 const Signup = () => {
-    const { authUser, setAuthUser } = useAuth();
-    ;
+    const { authUser } = useAuth();
+    const navigate = useNavigate();
+    
     
    
   const [isSignup, setIsSignup] = React.useState(true);
@@ -33,10 +35,18 @@ const Signup = () => {
       const response = await axios.post(url, formValues);
       if(response.data.success){
         toast.success(isSignup ? "User created successfully" : "Login successful");
-        
-        console.log("Form submitted", response.data);
-        localStorage.setItem("ChatApp", JSON.stringify(response.data));
-        setAuthUser(response.data.user);
+        localStorage.setItem("email", formValues.email);
+        if(response.data.user.isVerified===false){
+          navigate('/verify');
+          
+        }
+        else{
+          localStorage.setItem("ChatApp", JSON.stringify(response.data));
+          if(authUser){
+            navigate('/home');
+          }
+        }
+       
         
       }
       else{

@@ -5,25 +5,18 @@ import Right from './pages/Right'
 import Signup from './components/Signup'
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes } from 'react-router-dom'
-import { useAuth } from './context/AuthProvider'
+
+import VerifyEmail from './components/VerifyEmail'
+import Home from './pages/Home'
 
 function App() {
-  const { authUser } = useAuth();
+  
 
   return (
     <Routes>
-
-      <Route path='/' element={authUser ? (
-        <div className='flex h-screen'>
-          <ToastContainer />
-          <Left />
-          <Right />
-        </div>
-      ) : (
-
-        <Signup />
-      )}
-      />
+      <Route path='/verify' element={<VerifyEmail />} />
+      <Route path='/' element={ <Signup/> }/>
+      <Route path='/home' element={ <Home/> }/>
     </Routes>
   )
 }
