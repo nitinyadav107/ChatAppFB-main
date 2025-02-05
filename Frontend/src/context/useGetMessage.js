@@ -4,7 +4,7 @@ import axios from "axios";
 const useGetMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessage, selectedConversation } = useConversation();
-  const receiver_id=(JSON.parse(localStorage.getItem('ChatApp'))).user.id
+  const receiver_id=(JSON.parse(localStorage.getItem('ChatApp'))).id
   console.log(receiver_id)
   //  console.log(selectedConversation._id)
 

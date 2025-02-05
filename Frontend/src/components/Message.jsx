@@ -5,10 +5,10 @@ function Message({ message }) {
   const authUser = JSON.parse(localStorage.getItem("ChatApp"));
   console.log("Auth user", authUser);
   console.log("Auth user id"
-  , authUser.user.id);
+  , authUser.id);
   console.log("Message sender id", message.senderId);
-  const itsMe1 = message.senderId === authUser.user.id
-  const itsMe2= message.newMessage? message.newMessage.senderId === authUser.user.id:false;
+  const itsMe1 = message.senderId === authUser.id
+  const itsMe2= message.newMessage? message.newMessage.senderId === authUser.id:false;
   const itsMe=itsMe1 || itsMe2;
   console.log("itsMe", itsMe);
 

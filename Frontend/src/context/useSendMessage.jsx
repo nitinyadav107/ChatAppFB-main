@@ -5,7 +5,7 @@ import useConversation from "../zustand/useConversation.js";
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessage, selectedConversation } = useConversation();
-  const sender_id=(JSON.parse(localStorage.getItem('ChatApp'))).user.id
+  const sender_id=(JSON.parse(localStorage.getItem('ChatApp'))).id
 
   const sendMessages = async (message) => {
     setLoading(true);

@@ -7,6 +7,7 @@ import router from "./routes/user.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import MessageRouter from "./routes/message.route.js";
+import geminiRouter from "./routes/gemini.route.js";
 
 const app = express();
 dotenv.config();
@@ -58,6 +59,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', router);
 app.use('/api/message', MessageRouter);
+app.use('/api/ai',geminiRouter);
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

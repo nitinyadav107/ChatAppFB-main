@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthProvider';
 import { useNavigate } from 'react-router';
 
 const Signup = () => {
-    const { authUser } = useAuth();
+    const { authUser,setAuthUser } = useAuth();
     const navigate = useNavigate();
     
     
@@ -41,10 +41,11 @@ const Signup = () => {
           
         }
         else{
-          localStorage.setItem("ChatApp", JSON.stringify(response.data));
-          if(authUser){
-            navigate('/home');
-          }
+          const userData = response.data.user;
+          localStorage.setItem("ChatApp", JSON.stringify(userData));
+          setAuthUser(userData); 
+          console.log(authUser.id);
+          navigate('/home');
         }
        
         

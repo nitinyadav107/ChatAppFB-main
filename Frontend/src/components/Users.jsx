@@ -3,7 +3,7 @@ import User from './User'
 import GetAllUser from '../context/GetAllUser';
 
 const Users = () => {
-   const loginUser = JSON.parse(localStorage.getItem('ChatApp')).user;
+   const loginUser = JSON.parse(localStorage.getItem('ChatApp'));
    const [allUsers, setAllUsers] = GetAllUser();
    console.log(allUsers);
    

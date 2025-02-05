@@ -17,7 +17,7 @@ export const SocketProvider = ({ children }) => {
     if (authUser) {
       const newSocket = io("http://localhost:8000", {
         query: {
-          userId: authUser.user.id,
+          userId: authUser.id,
         },
       });
       setSocket(newSocket);
