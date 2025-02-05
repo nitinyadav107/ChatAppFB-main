@@ -3,7 +3,7 @@ import Chatuser from '../components/Chatuser'
 import Messages from '../components/Messages'
 import Typesend from '../components/Typesend'
 import useConversation from '../zustand/useConversation'
-import { useAuth } from '../context/AuthProvider';
+
 import { CiMenuFries } from "react-icons/ci";
 
 const Right = () => {
@@ -36,8 +36,8 @@ const Right = () => {
 
 export default Right
 const NoChatSelected = () => {
-  const {authUser} = useAuth();
-  console.log(authUser);
+  
+  const authUser=JSON.parse(localStorage.getItem("ChatApp"));
   return (
     <>
       <div className="relative">
