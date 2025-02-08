@@ -8,7 +8,9 @@ function Message({ message }) {
   , authUser.id);
   console.log("Message sender id", message.senderId);
   const itsMe1 = message.senderId === authUser.id
+  console.log("itsMe1", itsMe1);
   const itsMe2= message.newMessage? message.newMessage.senderId === authUser.id:false;
+  console.log("itsMe2", itsMe2);
   const itsMe=itsMe1 || itsMe2;
   console.log("itsMe", itsMe);
 

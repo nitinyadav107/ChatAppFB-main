@@ -10,7 +10,8 @@ const useGetMessage = () => {
 
   useEffect(() => {
     const getMessages = async () => {
-      if (selectedConversation && selectedConversation._id) {
+     
+       if (selectedConversation && selectedConversation._id) {
         setLoading(true);
         try {
           const res = await axios.get(
