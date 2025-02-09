@@ -21,10 +21,9 @@ const useSendMessage = () => {
             );
 
           
-            await setMessage([...messages, data.data]);
-            console.log(data.data)
+            setMessage([...messages, data.data]);
             
-            await new Promise((resolve) => setTimeout(resolve, 900));
+           
           
             const res = await axios.post(`/api/ai/gemini`, { message });
             const newMessage = {
@@ -39,7 +38,7 @@ const useSendMessage = () => {
             
 
            
-            await setMessage([...messages, gemini.data]);
+             setMessage([...messages,data.data,gemini.data]);
 
           } catch (error) {
             console.log("Error in handler:", error);

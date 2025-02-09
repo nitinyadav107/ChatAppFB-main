@@ -30,7 +30,7 @@ const useGetMessage = () => {
       }
     };
     getMessages();
-  }, [selectedConversation, setMessage]);
+  }, [selectedConversation, setMessage,receiver_id]);
   return { loading, messages };
 };
 
