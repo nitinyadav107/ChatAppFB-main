@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import User from './User'
-import GetAllUser from '../context/GetAllUser';
+import useGetAllUser from '../context/useGetAllUser';
 
 const Users = () => {
    const loginUser = JSON.parse(localStorage.getItem('ChatApp'));
-   const [allUsers, setAllUsers] = GetAllUser();
+   const [allUsers, setAllUsers] = useGetAllUser();
    console.log(allUsers);
    
   return (

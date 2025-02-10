@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const GetAllUser = () => {
+const useGetAllUser = () => {
   const [allUsers, setAllUsers] = useState([])
   console.log(allUsers);
   const [loading, setLoading] = useState(false)
@@ -26,5 +26,5 @@ const GetAllUser = () => {
   return [allUsers, loading]
 }
 
-export default GetAllUser
+export default useGetAllUser
 
