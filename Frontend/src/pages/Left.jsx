@@ -5,11 +5,10 @@ import Logout from '../components/Logout'
 
 const Left = () => {
   return (
-    <div className='border 
-    border-white bg-gray-900 w-[30%] text-gray-200'>
+    <div className=' bg-gray-900 w-[30%] text-gray-200'>
       <Search/>
       <Users/>
-      <Logout />
+     
       
     </div>
   )

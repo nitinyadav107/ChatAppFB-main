@@ -2,6 +2,7 @@ import { generateToken } from "../jwt/generateToken.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { sendVerificationEamil, senWelcomeEmail } from "../middleware/Email.js";
+import { v2 as cloudinary } from 'cloudinary';
 export const signup = async (req, res) => {
   const { fullname, email, password, confirmPassword } = req.body;
 
@@ -27,13 +28,13 @@ export const signup = async (req, res) => {
     const result = await newUser.save();
     if (newUser) {
       generateToken(result._id, res);
-     
-     
-     
+
+
+
       await sendVerificationEamil(result.email, verficationToken)
 
-      res.status(201).json({ message: "User created successfully", success: true, user:newUser });
-     
+      res.status(201).json({ message: "User created successfully", success: true, user: newUser });
+
     }
 
   } catch (error) {
@@ -55,9 +56,9 @@ export const login = async (req, res) => {
 
 
     generateToken(user._id, res);
-    const v= user.isVerified;
+    const v = user.isVerified;
 
-    if(user.verficationTokenExpiresAt<Date.now() && v===false) {
+    if (user.verficationTokenExpiresAt < Date.now() && v === false) {
       const verifyToken = Math.floor(100000 + Math.random() * 900000).toString()
       const newExpiry = Date.now() + 24 * 60 * 60 * 1000;
 
@@ -66,12 +67,12 @@ export const login = async (req, res) => {
       await user.save();
 
     }
-    
-    if(v===false){
+
+    if (v === false) {
       await sendVerificationEamil(user.email, user.verficationToken)
     }
 
-    res.status(200).json({ message: "Login successful", success: true, user: { id: user._id, email: user.email, fullname: user.fullname } });
+    res.status(200).json({ message: "Login successful", success: true, user: { id: user._id, email: user.email, fullname: user.fullname, image: user.image } });
 
 
   } catch (error) {
@@ -82,9 +83,9 @@ export const logout = async (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
     sameSite: "strict",
-    secure: true, 
+    secure: true,
   });
-  res.status(200).json({ message: "Logged out successfully" ,success:true});
+  res.status(200).json({ message: "Logged out successfully", success: true });
 }
 export const getUser = async (req, res) => {
 
@@ -114,7 +115,7 @@ export const VerfiyEmail = async (req, res) => {
     if (user.verficationToken !== code || user.verficationTokenExpiresAt < Date.now()) {
       return res.status(400).json({ success: false, message: "Inavlid or Expired Code" })
     }
- 
+
     user.isVerified = true;
     user.verficationToken = undefined;
     user.verficationTokenExpiresAt = undefined;
@@ -127,5 +128,39 @@ export const VerfiyEmail = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(400).json({ success: false, message: "internal server error" })
+  }
+}
+export const uploadImage = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+   
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, { resource_type: 'image' });
+    user.image = result.secure_url;
+    
+    await user.save();
+    res.status(200).json({ message: "Image uploaded successfully", success: true, user });
+  } catch (error) {
+    res.status(400).json({ message: error.message, success: false });
+  }
+
+}
+
+export const sendProfileImage = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    res.status(200).json({ message: "Image sent successfully", success: true, user });
+    }
+  catch (error) {
+    res.status(400).json({ message: error.message, success: false });
   }
 }

@@ -8,13 +8,19 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import MessageRouter from "./routes/message.route.js";
 import geminiRouter from "./routes/gemini.route.js";
+import connectCloudinary from './config/cloudinary.js';
+
 
 const app = express();
 dotenv.config();
+connectCloudinary();
 
 app.use(cookieParser());
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
+
+
+
 
 const server = http.createServer(app);
 
