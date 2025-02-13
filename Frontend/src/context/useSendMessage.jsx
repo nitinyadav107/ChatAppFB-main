@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import useConversation from "../zustand/useConversation.js";
+import { toast } from "react-toastify";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,7 @@ const useSendMessage = () => {
 
           } catch (error) {
             console.log("Error in handler:", error);
+           
           } finally {
             setLoading(false);
           }
@@ -54,14 +56,24 @@ const useSendMessage = () => {
           `/api/message/send/${selectedConversation._id}`,
           { sender_id, message }
         );
-        await setMessage([...messages, res.data]);
-        console.log(res.data)
-        setLoading(false);
+        if(res.data.error){
+          toast.error(res.data.error);
+        }
+        else{
+          await setMessage([...messages, res.data]);
+          console.log(res.data)
+         
+          setLoading(false);
+          
+        }
+
+       
 
       }
 
     } catch (error) {
       console.log("Error in send messages", error);
+     
       setLoading(false);
     }
   };
